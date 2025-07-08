@@ -20,21 +20,21 @@ namespace recruitment
 
             if ((Session["email"] != null) && (Session["password"] != null) && (Session["can_regno"] != null) && (Session["S_appregno"] != null))
             {
-               
+
 
                 if (!IsPostBack)
                 {
-                    
-                    regid();                    
+
+                    regid();
                     AppCompletion();
-                    datashow();
+                    DataShow();
                     YesOrNo();
 
                     JoinTimeLable.Visible = false;
                     JoiningTimetxt.Visible = false;
-                    if (countryvisitdrop.SelectedValue=="No")
+                    if (countryvisitdrop.SelectedValue == "No")
                     {
-                       
+
                         countrypanel.Visible = false;
                     }
 
@@ -65,8 +65,20 @@ namespace recruitment
                     }
 
                     if ((AgeRlxClaimDrop.SelectedValue == "No") || (AgeRlxClaimDrop.SelectedValue == "0"))
-                    {                       
+                    {
                         RelaxationPanel.Visible = false;
+                    }
+
+                    string pcode = Convert.ToString(Session["pcode"]);
+
+                    //   string hindiType = applyhpostlbl.Text;
+                    if (pcode == "JSA")
+
+                    //     string pcode = Convert.ToString(Session["pcode"]);
+                    {
+                        TypingTestDrop.SelectedValue = "Hindi";
+                        TypingTestDrop.Enabled = false;
+
                     }
 
 
@@ -156,7 +168,7 @@ namespace recruitment
                 Response.Write("<script> alert ('" + ex.Message + "');</script>");
 
             }
-            
+
         }
 
         private void totalduration()
@@ -219,9 +231,10 @@ namespace recruitment
 
 
 
+
         protected void Addbutton_Click(object sender, EventArgs e)
         {
-            addforignvisit();
+            Addforignvisit();
             UpdateForeignVisitYesNo();
 
         }
@@ -252,7 +265,7 @@ namespace recruitment
                 {
                     countrypanel.Visible = false;
                 }
-                
+
             }
         }
 
@@ -267,7 +280,7 @@ namespace recruitment
 
 
                 SqlConnection connection = MySqlConnection.Recruitmentcon();
-                string sql1 = "SELECT IsForignVist,UnderBond,IsRelativeCSIR,ReName,ReDesign,ReType,ReLab,Ref1,Ref2,Ref3,Ref4,Ref5,Ref6,TermsCondition,pwd,PermentGovtStaff,pwdPercent,pwdCatagory,ClaimingAgeRelax,AgeRelaxCatagory FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
+                string sql1 = "SELECT IsForignVist,UnderBond,IsRelativeCSIR,ReName,ReDesign,ReType,ReLab,Ref1,Ref2,Ref3,Ref4,Ref5,Ref6,TermsCondition,pwd,PermentGovtStaff,pwdPercent,pwdCatagory,ClaimingAgeRelax,AgeRelaxCatagory,TypingTestMedium FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
 
                 SqlCommand command = new SqlCommand(sql1, connection);
                 command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
@@ -280,13 +293,13 @@ namespace recruitment
                     {
                         countryvisitdrop.SelectedValue = dr.GetValue(0).ToString();
                         bonddrop.SelectedValue = dr.GetValue(1).ToString();
-                    //    JoiningTimetxt.Text = dr.GetValue(2).ToString();
+                        //    JoiningTimetxt.Text = dr.GetValue(2).ToString();
                         RelativeDrop.SelectedValue = dr.GetValue(2).ToString();
 
 
                         RelativeNametxt.Text = dr.GetValue(3).ToString();
                         PresentDesignationtxt.Text = dr.GetValue(4).ToString();
-                        RelationTypetxt.Text = dr.GetValue(5).ToString();                       
+                        RelationTypetxt.Text = dr.GetValue(5).ToString();
                         NameCSIRtxt.Text = dr.GetValue(6).ToString();
 
                         NameRef1.Text = dr.GetValue(7).ToString();
@@ -296,7 +309,7 @@ namespace recruitment
                         NameRef2.Text = dr.GetValue(10).ToString();
                         OccupRef2.Text = dr.GetValue(11).ToString();
                         AddressRef2.Text = dr.GetValue(12).ToString();
-                      
+
 
                         string checkbox = dr.GetValue(13).ToString();
 
@@ -306,18 +319,20 @@ namespace recruitment
                         pwdtypedrop.SelectedValue = dr.GetValue(17).ToString();
                         AgeRlxClaimDrop.SelectedValue = dr.GetValue(18).ToString();
                         AgeRlxConfDrop.SelectedValue = dr.GetValue(19).ToString();
+                        TypingTestDrop.SelectedValue = dr.GetValue(20).ToString();
 
-                        if (checkbox =="Yes")
+
+                        if (checkbox == "Yes")
                         {
                             termsandcondtionCheck.Checked = true;
                         }
 
-                        else if (checkbox=="No")
+                        else if (checkbox == "No")
                         {
                             termsandcondtionCheck.Checked = false;
                         }
 
-                        
+
 
                     }
                 }
@@ -341,7 +356,7 @@ namespace recruitment
             }
 
         }
-        private void datashow()
+        private void DataShow()
         {
             // GridView1.Columns[0].Visible = false;
             //Label2.Text = GridView1.Columns[0].ToString();
@@ -379,14 +394,14 @@ namespace recruitment
                     Response.Write("<script> alert (" + ex.Message + "');</script>");
 
                 }
-                
+
             }
         }
 
         private void UpdateForeignVisitYesNo()
         {
             using (SqlConnection conn = MySqlConnection.Recruitmentcon())
-            {              
+            {
                 string dbcanreg = regidlbl.Text;
                 string dbappno = appidnolbl.Text;
 
@@ -400,7 +415,7 @@ namespace recruitment
             }
         }
 
-        private void addforignvisit()
+        private void Addforignvisit()
         {
             if (String.IsNullOrEmpty(countrytxt.Text))
 
@@ -425,7 +440,7 @@ namespace recruitment
 
             else if (String.IsNullOrEmpty(visitdetailstxt.Text))
             {
-                Response.Write("<script> alert ('Please Add Purpose of the visit');</script>");
+                Response.Write("<script> alert ('Please Add Details of the Visit');</script>");
 
             }
 
@@ -435,7 +450,7 @@ namespace recruitment
                 {
                     using (SqlConnection conn = MySqlConnection.Recruitmentcon())
                     {
-                      
+
                         // string expcount = regidlbl.Text + 1;
                         string dbcanreg = regidlbl.Text;
                         // string dbpcode = postDetailsdrop.Text;
@@ -467,12 +482,12 @@ namespace recruitment
                         //  conn.Open();
 
                         string insertquery = "insert into forignvisit(can_regno, appregno, country, fromdate, todate, totaldays, visitdetails) values (@canreg, @dbappno, @vcountryname,  @fromdate, @todate, @totaldays,@visitdetails)";
-                      //  string insertquery1 = "UPDATE basicdetailsNew SET IsForignVist = @vIsVisited WHERE appregno = @ddbappno and can_regno=@dcanreg";
+                        //  string insertquery1 = "UPDATE basicdetailsNew SET IsForignVist = @vIsVisited WHERE appregno = @ddbappno and can_regno=@dcanreg";
 
 
 
                         SqlCommand cmd = new SqlCommand(insertquery, conn);
-                     //   SqlCommand cmd1 = new SqlCommand(insertquery1, conn);
+                        //   SqlCommand cmd1 = new SqlCommand(insertquery1, conn);
 
 
 
@@ -490,16 +505,16 @@ namespace recruitment
                         cmd.Parameters.AddWithValue("@visitdetails", visitdetails);
 
 
-//                        cmd1.Parameters.AddWithValue("@canreg", dbcanreg);
-///                        cmd1.Parameters.AddWithValue("@dbappno", dbappno);
-//                        cmd1.Parameters.AddWithValue("@vIsVisited", vIsVisited);
+                        //                        cmd1.Parameters.AddWithValue("@canreg", dbcanreg);
+                        ///                        cmd1.Parameters.AddWithValue("@dbappno", dbappno);
+                        //                        cmd1.Parameters.AddWithValue("@vIsVisited", vIsVisited);
 
 
                         cmd.ExecuteNonQuery();
-                     //   cmd1.ExecuteNonQuery();
+                        //   cmd1.ExecuteNonQuery();
 
-                        datashow();
-                       
+                        DataShow();
+
                         countrytxt.Text = "";
                         fromtxt.Text = "";
                         totxt.Text = "";
@@ -533,7 +548,7 @@ namespace recruitment
 
 
 
-          //  string vMinJoiningMonth = JoiningTimetxt.Text.ToString();
+            //  string vMinJoiningMonth = JoiningTimetxt.Text.ToString();
 
             string vReName = RelativeNametxt.Text;
             string vReDesign = PresentDesignationtxt.Text;
@@ -558,12 +573,15 @@ namespace recruitment
 
             string dbappno = appidnolbl.Text;
 
+            string vTypingMedium = TypingTestDrop.SelectedValue.ToString();
+
+
             try
             {
                 using (SqlConnection conn = MySqlConnection.Recruitmentcon())
                 {
-                                        
-                    string insertquery1 = "UPDATE basicdetailsNew SET IsForignVist = @dIsVisited, UnderBond=@dIsBond, PermentGovtStaff=@vIsGovStaff, pwdPercent=@vPwdPercent, pwdCatagory=@vPwdCatagory, ClaimingAgeRelax=@vageRelxClaim,AgeRelaxCatagory=@vClaimCatagory, IsRelativeCSIR=@dIsRelative,ReName = @dReName, ReDesign=@dReDesign, ReType=@dReType, ReLab=@dReLab, RelativeCSIRDetail=@dRelativeDetails, Ref1 = @dRef1, Ref2=@dRef2, Ref3=@dRef3, Ref1Full=@dRef1Full, Ref4=@dRef4, Ref5=@dRef5, Ref6=@dRef6, Ref2Full=@dRef2Full,TermsCondition=@terms  WHERE appregno = @ddbappno and can_regno=@dcanreg";
+
+                    string insertquery1 = "UPDATE basicdetailsNew SET IsForignVist = @dIsVisited, UnderBond=@dIsBond, PermentGovtStaff=@vIsGovStaff, pwdPercent=@vPwdPercent, pwdCatagory=@vPwdCatagory, ClaimingAgeRelax=@vageRelxClaim,AgeRelaxCatagory=@vClaimCatagory, IsRelativeCSIR=@dIsRelative,ReName = @dReName, ReDesign=@dReDesign, ReType=@dReType, ReLab=@dReLab, RelativeCSIRDetail=@dRelativeDetails, Ref1 = @dRef1, Ref2=@dRef2, Ref3=@dRef3, Ref1Full=@dRef1Full, Ref4=@dRef4, Ref5=@dRef5, Ref6=@dRef6, Ref2Full=@dRef2Full,TermsCondition=@terms, TypingTestMedium= @vTypingMedium  WHERE appregno = @ddbappno and can_regno=@dcanreg";
 
                     SqlCommand cmd1 = new SqlCommand(insertquery1, conn);
 
@@ -578,7 +596,7 @@ namespace recruitment
 
 
 
-                 //   cmd1.Parameters.AddWithValue("@dMinJoiningMonth", vMinJoiningMonth);
+                    //   cmd1.Parameters.AddWithValue("@dMinJoiningMonth", vMinJoiningMonth);
                     cmd1.Parameters.AddWithValue("@dIsRelative", vIsRelative);
 
 
@@ -600,12 +618,14 @@ namespace recruitment
                     cmd1.Parameters.AddWithValue("@dRef2Full", vRef2Full);
                     cmd1.Parameters.AddWithValue("@terms", terms);
 
-                    
+
 
 
 
                     cmd1.Parameters.AddWithValue("@dcanreg", dbcanreg);
                     cmd1.Parameters.AddWithValue("@ddbappno", dbappno);
+
+                    cmd1.Parameters.AddWithValue("@vTypingMedium", vTypingMedium);
 
                     cmd1.ExecuteNonQuery();
                     conn.Close();
@@ -649,10 +669,10 @@ namespace recruitment
                     conn.Close();
                 }
             }
-            this.datashow();
+            this.DataShow();
         }
 
-        private void stepsComplete()
+        private void StepsComplete()
         {
             string canregdbtest = Convert.ToString(Session["can_regno"]);
             string vappidnolbl = Convert.ToString(Session["S_appregno"]);
@@ -689,7 +709,7 @@ namespace recruitment
                 Response.Write("<script> alert ('Please Select Yes Or No');</script>");
             }
 
-           else if (GridView1.Rows.Count > 0 && countryvisitdrop.SelectedValue=="No")
+            else if (GridView1.Rows.Count > 0 && countryvisitdrop.SelectedValue == "No")
             {
                 Response.Write("<script> alert ('Please Check Forign Visit Details');</script>");
             }
@@ -729,6 +749,10 @@ namespace recruitment
                 Response.Write("<script> alert ('Please Accept the Declaration');</script>");
             }
 
+            else if (TypingTestDrop.SelectedValue == "0")
+            {
+                Response.Write("<script> alert ('Please Select the Medium for Computer Proficiency Test ');</script>");
+            }
 
             //else if (RelativeDrop.SelectedValue == "Yes")
 
@@ -760,10 +784,10 @@ namespace recruitment
             else
 
 
-              
+
             {
                 UpdateBasicDetailsTable();
-                stepsComplete();
+                StepsComplete();
 
                 Response.Redirect("candidate_Home.aspx");
             }
@@ -789,7 +813,7 @@ namespace recruitment
                 Response.Write("<script> alert ('Select Yes or No for Bond Catagory');</script>");
             }
 
-            
+
         }
 
         protected void RelativeDrop_SelectedIndexChanged(object sender, EventArgs e)
@@ -807,8 +831,8 @@ namespace recruitment
             }
             else if (RelativeDrop.SelectedValue == "No")
             {
-               
-              relativepanel.Visible = false;
+
+                relativepanel.Visible = false;
                 RelativeNametxt.Text = "";
                 PresentDesignationtxt.Text = "";
                 RelationTypetxt.Text = "";
@@ -817,7 +841,7 @@ namespace recruitment
 
             }
 
-           
+
         }
 
         protected void pwddrop_SelectedIndexChanged(object sender, EventArgs e)
@@ -837,7 +861,7 @@ namespace recruitment
             {
 
                 pwdpanel.Visible = false;
-               
+
                 pwdpercttxt.Text = "";
                 pwdtypedrop.SelectedIndex = 0;
 
@@ -848,7 +872,7 @@ namespace recruitment
 
         protected void AgeRlxClaimDrop_SelectedIndexChanged(object sender, EventArgs e)
         {
-          
+
 
             if (AgeRlxClaimDrop.SelectedValue == "Yes")
             {
@@ -858,7 +882,7 @@ namespace recruitment
             {
 
                 RelaxationPanel.Visible = false;
-                             
+
 
             }
         }

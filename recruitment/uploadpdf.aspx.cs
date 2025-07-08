@@ -14,14 +14,14 @@ namespace recruitment
 {
     public partial class uploadpdf : System.Web.UI.Page
     {
+        readonly string smsg = "File Uploaded Successfully";
 
-        string smsg = "File Uploaded Successfully";
-        string emsg = "Please first select a file to upload...";
-        string pdfonly = "Only PDF Files are allowed to upload";
-        string photoonly = "Only JPG Files are allowed to upload";
-        string maxpdf = "Upload PDF file less then 2 MB size";
-        string maxphoto = "Upload JPG file less then 1 MB size";
-        string deletemsg = "You are already Deleted File from Server, Please upload again.";
+        readonly string emsg = "Please first select a file to upload...";
+        readonly string pdfonly = "Only PDF Files are allowed to upload";
+        readonly string photoonly = "Only JPG Files are allowed to upload";
+        readonly string maxpdf = "Upload PDF file less then 2 MB size";
+        readonly string maxphoto = "Upload JPG file less then 1 MB size";
+        readonly string deletemsg = "You are already Deleted File from Server, Please upload again.";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,11 +58,15 @@ namespace recruitment
                 Communityfileexitcheck();
                 Experiencefileexitcheck();
                 ExServicemanfileexitcheck();
-             //   NOCfileexitcheck();
+                //   NOCfileexitcheck();
                 PWDfileexitcheck();
-                
+
                 photofileexitcheck();
                 signfileexitcheck();
+
+                WidowPDF1fileexitcheck();
+
+                WidowPDF2fileexitcheck();
                 //  photoload();
             }
         }
@@ -92,17 +96,17 @@ namespace recruitment
                     {
 
                         string isComp = dr.GetValue(0).ToString();
-                       
-                      
+
+
                         if (isComp == "Yes")
                         {
                             Response.Redirect("position_details.aspx");
 
                         }
-                        
+
                     }
                 }
-               
+
             }
 
 
@@ -124,7 +128,7 @@ namespace recruitment
 
 
                 SqlConnection connection = MySqlConnection.Recruitmentcon();
-                string sql1 = "SELECT SSLC,HSC,ITI,DIPLOMA,UG,PG,PHD,IsExperienced,ExArmy,PermentGovtStaff,pwd, IsUploadComplete,cast FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
+                string sql1 = "SELECT SSLC,HSC,ITI,DIPLOMA,UG,PG,PHD,IsExperienced,ExArmy,PermentGovtStaff,pwd, ClaimingAgeRelax, AgeRelaxCatagory, IsUploadComplete,cast FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
 
                 SqlCommand command = new SqlCommand(sql1, connection);
                 command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
@@ -144,13 +148,17 @@ namespace recruitment
                         string PGyesno = dr.GetValue(5).ToString();
                         string PHDyesno = dr.GetValue(6).ToString();
 
-                    //    
+                        //    
                         string Experienceyesno = dr.GetValue(7).ToString();
                         string ExServicemanyesno = dr.GetValue(8).ToString();
                         string NOCyesno = dr.GetValue(9).ToString();
                         string PWDyesno = dr.GetValue(10).ToString();
-                        string IsComplete = dr.GetValue(11).ToString();
-                        string Communityyesno = dr.GetValue(12).ToString();
+                        string AgeRelaxyesno = dr.GetValue(11).ToString();
+                        string AgeRelaxCategory = dr.GetValue(12).ToString();
+                        string IsComplete = dr.GetValue(13).ToString();
+                        string Communityyesno = dr.GetValue(14).ToString();
+
+
                         //if (IsComplete == "Yes")
                         //{
                         //    Response.Redirect("PreviewDetails.aspx");
@@ -281,7 +289,25 @@ namespace recruitment
 
                             PWDTableRow.Visible = false;
                         }
-                        
+
+
+
+                        if ((AgeRelaxyesno == "Yes") && (AgeRelaxCategory == "Widow/Divorced"))
+                        {
+                            WidowDoc1Rwo.Visible = true;
+                            WidowDoc2Rwo.Visible = true;
+
+                        }
+
+                        //                        else if ((AgeRelaxyesno == "No") && (AgeRelaxCategory != "Widow/Divorced"))
+                        else
+                        {
+                            WidowDoc1Rwo.Visible = false;
+                            WidowDoc2Rwo.Visible = false;
+
+                        }
+
+
                     }
                 }
                 else
@@ -342,7 +368,7 @@ namespace recruitment
 
         }
 
-       
+
 
         protected void SSLC_btn_Click(object sender, EventArgs e)
         {
@@ -760,6 +786,67 @@ namespace recruitment
 
             }
         }
+
+        public void WidowPDF1fileexitcheck()
+        {
+            string pdfname = Server.MapPath("~/files/" + regidlbl.Text.ToString() + "_widwowDivorce1" + ".pdf");
+            ViewState["pdfname"] = pdfname;
+            if (File.Exists(pdfname))
+            {
+
+                WidowPdfDelete1.Visible = true;
+                WidowPdfView1.Visible = true;
+                WidowFileUpload1.Visible = true;
+                WidowBtn1.Visible = true;
+                WidowFileUpload1.Enabled = false;
+                WidowBtn1.Enabled = false;
+                WidowLbl1.Text = "File Uploaded Sucessfully";
+
+            }
+            else
+            {
+                WidowPdfDelete1.Visible = false;
+                WidowPdfView1.Visible = false;
+                WidowFileUpload1.Enabled = true;
+                WidowBtn1.Enabled = true;
+                //  FileUpload2.Visible = false;
+                // HSC_btn.Visible = false;
+
+                // Label1.Text = "You are already Deleted File from Server, Please upload again.";
+
+            }
+        }
+
+        public void WidowPDF2fileexitcheck()
+        {
+            string pdfname = Server.MapPath("~/files/" + regidlbl.Text.ToString() + "_widwowDivorce2" + ".pdf");
+            ViewState["pdfname"] = pdfname;
+            if (File.Exists(pdfname))
+            {
+
+                WidowPdfDelete2.Visible = true;
+                WidowPdfView2.Visible = true;
+                WidowFileUpload2.Visible = true;
+                WidowBtn2.Visible = true;
+                WidowFileUpload2.Enabled = false;
+                WidowBtn2.Enabled = false;
+                WidowLbl2.Text = "File Uploaded Sucessfully";
+
+            }
+            else
+            {
+                WidowPdfDelete2.Visible = false;
+                WidowPdfView2.Visible = false;
+                WidowFileUpload2.Enabled = true;
+                WidowBtn2.Enabled = true;
+                //  FileUpload2.Visible = false;
+                // HSC_btn.Visible = false;
+
+                // Label1.Text = "You are already Deleted File from Server, Please upload again.";
+
+            }
+        }
+
         public void photofileexitcheck()
         {
 
@@ -774,7 +861,7 @@ namespace recruitment
 
                 photo.Visible = true;
                 photo_deletebtn.Visible = true;
-                
+
 
                 //SignUpload.Visible = true;
                 //signaturebtn.Visible = true;
@@ -787,13 +874,13 @@ namespace recruitment
             }
             else
             {
-                              
+
                 photo_deletebtn.Visible = false;
                 PhotoUpload.Enabled = true;
                 photobtn.Enabled = true;
                 photo.Visible = false;
 
-                
+
             }
         }
 
@@ -810,7 +897,7 @@ namespace recruitment
                 signature.Visible = true;
                 sign_deletebtn.Visible = true;
 
-               
+
 
                 //FileUpload1.Visible = true;
                 //SSLC_btn.Visible = true;
@@ -829,8 +916,8 @@ namespace recruitment
 
                 SignUpload.Enabled = true;
                 signaturebtn.Enabled = true;
-                
-                               
+
+
             }
         }
 
@@ -862,7 +949,7 @@ namespace recruitment
                 sscfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label1.Text = "Upload only PDF ";
-               
+
             }
             else
             {
@@ -893,7 +980,7 @@ namespace recruitment
             ViewState["pdfname"] = pdfname;
             if (File.Exists(pdfname))
             {
-                
+
                 hsc_deletebtn.Visible = true;
                 hsc_pdfview.Visible = true;
                 File.Delete(pdfname);
@@ -901,7 +988,7 @@ namespace recruitment
                 hscfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label2.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -917,7 +1004,7 @@ namespace recruitment
             string regno = regidlbl.Text;
             string hsc = "_HSC";
 
-            string newhsc= regno + hsc;
+            string newhsc = regno + hsc;
 
 
             string textmobile = newhsc;
@@ -991,7 +1078,7 @@ namespace recruitment
 
             string dbappno = Convert.ToString(Session["S_appregno"]);
 
-           string yesno = "Yes";
+            string yesno = "Yes";
 
             try
             {
@@ -1012,7 +1099,7 @@ namespace recruitment
                     cmd1.Parameters.AddWithValue("@ddbappno", dbappno);
 
                     cmd1.ExecuteNonQuery();
-                   
+
                 }
             }
 
@@ -1090,8 +1177,8 @@ namespace recruitment
             {
                 Response.Write("<script> alert ('Upload Signature');</script>");
             }
-            else if ((SSLCTableRow.Visible ==true) && (ssc_deletebtn.Visible==false))
-            {             
+            else if ((SSLCTableRow.Visible == true) && (ssc_deletebtn.Visible == false))
+            {
                 Response.Write("<script> alert ('Upload 10TH OR Equivalent Certificate');</script>");
             }
 
@@ -1149,7 +1236,7 @@ namespace recruitment
             {
                 UploadCompleteCheck();
                 stepsComplete();
-                Response.Redirect("candidate_Home.aspx");               
+                Response.Redirect("candidate_Home.aspx");
             }
         }
 
@@ -1164,7 +1251,7 @@ namespace recruitment
             int photime = RandomNumber;
             string ph = "_PHOTO";
 
-            string newph = regno + underslalsh + photime+ ph;
+            string newph = regno + underslalsh + photime + ph;
 
 
             string textmobile = newph;
@@ -1213,43 +1300,43 @@ namespace recruitment
 
                         //Response.Redirect(Request.RawUrl);
                         if (photo.Visible == false)
-                        { 
-                                    try
-                                    {
-                                        using (SqlConnection conn = MySqlConnection.Recruitmentcon())
-                                        {
-                                            string insertquery = "Update rec_canreg SET photoid=@pid where can_regno=@canreg";
-                                            SqlCommand cmd = new SqlCommand(insertquery, conn);
+                        {
+                            try
+                            {
+                                using (SqlConnection conn = MySqlConnection.Recruitmentcon())
+                                {
+                                    string insertquery = "Update rec_canreg SET photoid=@pid where can_regno=@canreg";
+                                    SqlCommand cmd = new SqlCommand(insertquery, conn);
 
-                                            cmd.Parameters.AddWithValue("@pid", photime);
-                                            cmd.Parameters.AddWithValue("@canreg", regno);
+                                    cmd.Parameters.AddWithValue("@pid", photime);
+                                    cmd.Parameters.AddWithValue("@canreg", regno);
 
-                                            cmd.ExecuteNonQuery();
-                                            conn.Close();
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
 
-                                        }
-                                    }
+                                }
+                            }
 
-                                    catch (Exception ex)
-                                    {
-                                        Response.Write("<script> alert ('" + ex.Message + "');</script>");
-                                    }
+                            catch (Exception ex)
+                            {
+                                Response.Write("<script> alert ('" + ex.Message + "');</script>");
+                            }
 
 
-                        photofileexitcheck();
-                        SignPhotoLoad();
+                            photofileexitcheck();
+                            SignPhotoLoad();
 
-                        //   Label2.Text = string.Format(@"Uploaded file: {0}<br /> File size (in bytes): {1:N0}<br />  Content-type: {2}", FileUpload1.FileName,
-                        //   FileUpload1.FileBytes.Length,
-                        //FileUpload1.PostedFile.ContentType);
+                            //   Label2.Text = string.Format(@"Uploaded file: {0}<br /> File size (in bytes): {1:N0}<br />  Content-type: {2}", FileUpload1.FileName,
+                            //   FileUpload1.FileBytes.Length,
+                            //FileUpload1.PostedFile.ContentType);
 
                         }
 
-                    else
-                    {
-                        photosucesslbl.Text = photoonly;
+                        else
+                        {
+                            photosucesslbl.Text = photoonly;
+                        }
                     }
-                }
                     //  Label2.Text = "Your file was uploaded successfully.";
 
                 }
@@ -1262,7 +1349,7 @@ namespace recruitment
             }
         }
 
-      
+
         protected void photo_deletebtn_Click(object sender, ImageClickEventArgs e)
         {
             string photoname = Server.MapPath("~/files/photos/" + regidlbl.Text.ToString() + "_" + phottimelbl.Text.ToString() + "_PHOTO" + ".jpg");
@@ -1271,30 +1358,30 @@ namespace recruitment
             {
 
                 photo_deletebtn.Visible = true;
-             //   photo_view.Visible = true;
+                //   photo_view.Visible = true;
                 File.Delete(photoname);
                 stepsCompleteDelete();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 photo.ImageUrl = "~/files/noimage.jpg";
                 photofileexitcheck();
                 photosucesslbl.Text = "Upload only JPG Photo ";
-               
+
                 photo.Visible = false;
 
-                
+
             }
             else
             {
                 photo_deletebtn.Visible = false;
                 //  photo_view.Visible = true;
                 photosucesslbl.Text = deletemsg;
-                
+
             }
         }
 
         protected void signatureupload_Click(object sender, EventArgs e)
         {
-         //   if (!IsPostBack)
+            //   if (!IsPostBack)
             {
 
                 Random r = new Random();
@@ -1306,7 +1393,7 @@ namespace recruitment
                 int signtime = RandomNumber;
                 string ph = "_SIGN";
 
-                string newph = regno + underslalsh  + signtime + ph;
+                string newph = regno + underslalsh + signtime + ph;
 
 
                 string textmobile = newph;
@@ -1415,13 +1502,13 @@ namespace recruitment
                 File.Delete(signname);
                 stepsCompleteDelete();
                 Response.Redirect(Request.Url.AbsoluteUri);
-               
+
                 signfileexitcheck();
 
                 signsucesslbl.Text = "Upload only JPG Photo ";
 
                 signature.Visible = false;
-               
+
             }
             else
             {
@@ -1449,11 +1536,11 @@ namespace recruitment
                 int fileSize = ITIFileUpload.PostedFile.ContentLength;
 
                 if (fileSize < 1100000)
-                {                     
-                   string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(ITIFileUpload.FileName);                                 
-                   string fileExtension = Path.GetExtension(ITIFileUpload.FileName);         
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(ITIFileUpload.FileName);
+                    string fileExtension = Path.GetExtension(ITIFileUpload.FileName);
 
-                    if (fileExtension == ".pdf")                   
+                    if (fileExtension == ".pdf")
                     {
                         fileNameWithoutExtension = textmobile;
                         ITIFileUpload.PostedFile.SaveAs(Server.MapPath("~/files/" + fileNameWithoutExtension + fileExtension));
@@ -1465,7 +1552,7 @@ namespace recruitment
                     else
                     {
                         ITIlbl.Text = pdfonly;
-                    }                                       
+                    }
 
                 }
 
@@ -1503,7 +1590,7 @@ namespace recruitment
                 ITIfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label2.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -1585,7 +1672,7 @@ namespace recruitment
                 DIPfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label2.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -1667,7 +1754,7 @@ namespace recruitment
                 UGfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label2.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -1749,7 +1836,7 @@ namespace recruitment
                 PGfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Label2.Text = "Upload only PDF ";
-               
+
             }
             else
             {
@@ -1854,7 +1941,7 @@ namespace recruitment
                 Communityfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Communitylbl.Text = "Upload only PDF ";
-               
+
             }
             else
             {
@@ -1936,7 +2023,7 @@ namespace recruitment
                 stepsCompleteDelete();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 Experiencelbl.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -2018,7 +2105,7 @@ namespace recruitment
                 ExServicemanfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 ExServicemanlbl.Text = "Upload only PDF ";
-               
+
             }
             else
             {
@@ -2100,7 +2187,7 @@ namespace recruitment
                 NOCfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 NOClbl.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -2182,7 +2269,7 @@ namespace recruitment
                 PWDfileexitcheck();
                 Response.Redirect(Request.Url.AbsoluteUri);
                 PWDlbl.Text = "Upload only PDF ";
-                
+
             }
             else
             {
@@ -2193,9 +2280,178 @@ namespace recruitment
             }
         }
 
+        protected void WidowBtn1_Click(object sender, EventArgs e)
+        {
+            string regno = regidlbl.Text;
+            string widwowDivorce1 = "_widwowDivorce1";
+            string newwidwowDivorce1 = regno + widwowDivorce1;
+            string textmobile = newwidwowDivorce1;
+            if (WidowFileUpload1.HasFile == false)
+            {
+                // No file uploaded!
+                WidowLbl1.Text = emsg;
+            }
+
+            else if (WidowFileUpload1.HasFile)
+            {
+                int fileSize = WidowFileUpload1.PostedFile.ContentLength;
+
+                if (fileSize < 1100000)
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(WidowFileUpload1.FileName);
+                    string fileExtension = Path.GetExtension(WidowFileUpload1.FileName);
+
+                    if (fileExtension == ".pdf")
+                    {
+                        fileNameWithoutExtension = textmobile;
+                        WidowFileUpload1.PostedFile.SaveAs(Server.MapPath("~/files/" + fileNameWithoutExtension + fileExtension));
+                        Response.Redirect(Request.Url.AbsoluteUri);
+                        WidowLbl1.Text = smsg;
+                        //  signsucesslbl.ForeColor = System.Drawing.Color.Green;
+                        WidowPDF1fileexitcheck();
+                    }
+                    else
+                    {
+                        WidowLbl1.Text = pdfonly;
+                    }
+
+                }
+
+                else
+                {
+                    WidowLbl1.Text = maxpdf;
+                }
+            }
+        }
+
+        protected void WidowBtn2_Click(object sender, EventArgs e)
+        {
+            string regno = regidlbl.Text;
+            string widwowDivorce2 = "_widwowDivorce2";
+            string newwidwowDivorce2 = regno + widwowDivorce2;
+            string textmobile = newwidwowDivorce2;
+            if (WidowFileUpload2.HasFile == false)
+            {
+                // No file uploaded!
+                WidowLbl2.Text = emsg;
+            }
+
+            else if (WidowFileUpload2.HasFile)
+            {
+                int fileSize = WidowFileUpload2.PostedFile.ContentLength;
+
+                if (fileSize < 1100000)
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(WidowFileUpload2.FileName);
+                    string fileExtension = Path.GetExtension(WidowFileUpload2.FileName);
+
+                    if (fileExtension == ".pdf")
+                    {
+                        fileNameWithoutExtension = textmobile;
+                        WidowFileUpload2.PostedFile.SaveAs(Server.MapPath("~/files/" + fileNameWithoutExtension + fileExtension));
+                        Response.Redirect(Request.Url.AbsoluteUri);
+                        WidowLbl2.Text = smsg;
+                        //  signsucesslbl.ForeColor = System.Drawing.Color.Green;
+                        WidowPDF2fileexitcheck();
+                    }
+                    else
+                    {
+                        WidowLbl2.Text = pdfonly;
+                    }
+
+                }
+
+                else
+                {
+                    WidowLbl2.Text = maxpdf;
+                }
+            }
+        }
+
+
+        protected void WidowPdfView1_pdfview_Click(object sender, ImageClickEventArgs e)
+        {
+            string FilePath = Server.MapPath("files/" + regidlbl.Text.ToString() + "_widwowDivorce1" + ".pdf");
+            WebClient User = new WebClient();
+            Byte[] FileBuffer = User.DownloadData(FilePath);
+            if (FileBuffer != null)
+            {
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-length", FileBuffer.Length.ToString());
+                Response.BinaryWrite(FileBuffer);
+            }
+        }
+
+        protected void WidowPdfDelete1_Click(object sender, ImageClickEventArgs e)
+        {
+            string pdfname = Server.MapPath("~/files/" + regidlbl.Text.ToString() + "_widwowDivorce1" + ".pdf");
+            ViewState["pdfname"] = pdfname;
+            if (File.Exists(pdfname))
+            {
+
+                WidowPdfDelete1.Visible = true;
+                WidowPdfView1.Visible = true;
+                File.Delete(pdfname);
+                stepsCompleteDelete();
+
+                WidowPDF1fileexitcheck();
+                Response.Redirect(Request.Url.AbsoluteUri);
+                WidowLbl1.Text = "Upload only PDF ";
+
+            }
+            else
+            {
+                WidowPdfDelete1.Visible = false;
+                WidowPdfView1.Visible = false;
+                WidowLbl1.Text = deletemsg;
+
+            }
+        }
+
+
+        protected void WidowPdfView2_pdfview_Click(object sender, ImageClickEventArgs e)
+        {
+            string FilePath = Server.MapPath("files/" + regidlbl.Text.ToString() + "_widwowDivorce2" + ".pdf");
+            WebClient User = new WebClient();
+            Byte[] FileBuffer = User.DownloadData(FilePath);
+            if (FileBuffer != null)
+            {
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-length", FileBuffer.Length.ToString());
+                Response.BinaryWrite(FileBuffer);
+            }
+        }
+
+        protected void WidowPdfDelete2_Click(object sender, ImageClickEventArgs e)
+        {
+            string pdfname = Server.MapPath("~/files/" + regidlbl.Text.ToString() + "_widwowDivorce2" + ".pdf");
+            ViewState["pdfname"] = pdfname;
+            if (File.Exists(pdfname))
+            {
+
+                WidowPdfDelete2.Visible = true;
+                WidowPdfView2.Visible = true;
+                File.Delete(pdfname);
+                stepsCompleteDelete();
+
+                WidowPDF2fileexitcheck();
+                Response.Redirect(Request.Url.AbsoluteUri);
+                WidowLbl2.Text = "Upload only PDF ";
+
+            }
+            else
+            {
+                WidowPdfDelete2.Visible = false;
+                WidowPdfView2.Visible = false;
+                WidowLbl2.Text = deletemsg;
+
+            }
+        }
         protected void goBackbtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Candidate_Home.aspx");
         }
+
+
     }
 }

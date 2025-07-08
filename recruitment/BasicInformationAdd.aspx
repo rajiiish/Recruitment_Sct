@@ -34,23 +34,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    m<script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(event) { 
-            var scrollpos = localStorage.getItem('scrollpos');
-            if (scrollpos) window.scrollTo(0, scrollpos);
-        });
+    <script type="text/javascript">
 
-        window.onbeforeunload = function(e) {
-            localStorage.setItem('scrollpos', window.scrollY);
-        };
-    </script><%-- title start--%><div class="container">
+</script><%-- title start--%><div class="container">
         <div class="bg-light  text-center">
-        <p >Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br/>
-        &nbsp;(fields marked with * are mandatory) PLEASE BE VERY CAREFUL WHILE FILLING THE APPLICATION FORM </p>
-        <p >Candidate Registration Number:
-              <asp:Label ID="regidlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="Blue"></asp:Label>
-       Application ID: <asp:Label ID="appidnolbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label> 
-            Post Applying For: <asp:Label ID="applyhpostlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label>  </p>
+        <p class="alert-info">Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br/>
+        &nbsp; PLEASE BE VERY CAREFUL WHILE FILLING THE APPLICATION FORM </p>
+        <p>Candidate Registration Number: <asp:Label ID="regidlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="Blue"></asp:Label> </p> 
+     <p>  Application ID: <asp:Label ID="appidnolbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label> 
+            Post Applying For: <asp:Label ID="applyhpostlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label>  &nbsp; </p>
       </div>
 
     </div> 
@@ -164,7 +156,8 @@
                 
               </div>
                 <div class="col-md-4 mb-3">
-                <label for="cast">Caste Category</label>
+               
+                    <asp:Label ID="castLbl" runat="server" Text="Caste Category"></asp:Label>
                   <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="castDrop" InitialValue="0" validationgroup="basicpagegroup" runat="server" ForeColor="Red" />
 
                      <asp:DropDownList ID="castDrop" runat="server" class="form-control" placeholder="" value="" AutoPostBack="True" OnSelectedIndexChanged="castDrop_SelectedIndexChanged" >
@@ -259,52 +252,7 @@
 
              <div class="row">
                  <div class="col-md-4 mb-3">
-              <div class="auto-style5">
-                <label for="pwd">Essential Quaification:</label>
-                  <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="ArmyDrop" InitialValue="0" validationgroup="basicpagegroup" runat="server" ForeColor="Red" />
-                  
-                  <asp:DropDownList ID="ArmyDrop" runat="server" class="form-control" placeholder="" value="" AutoPostBack="True" OnSelectedIndexChanged="ArmyDrop_SelectedIndexChanged"  >
-                       <asp:ListItem Selected="True" Value="0">--Select--</asp:ListItem>
-                       <asp:ListItem Value="ExArmy">Ex-Servicemen</asp:ListItem>
-                      <asp:ListItem Value="JCO">JCO</asp:ListItem>
-                      <asp:ListItem Value="Para-Military">Para-Military Forces</asp:ListItem>                      
-                      <asp:ListItem Value="Others">Others</asp:ListItem>
-
-                  </asp:DropDownList>
-
-                
-              </div>
-                     </div>
-                    <div class="col-md-4 mb-3">
-                <label for="pwd">Name of Essential Quaification:</label>
-                         <asp:TextBox ID="EssnQualficationTxt" runat="server" class="form-control" placeholder="" value="" ></asp:TextBox>
-<asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="pwdDrop" InitialValue="0" validationgroup="basicpagegroup" runat="server" ForeColor="Red" />               
-                  
- <asp:RequiredFieldValidator ID="RequiredFieldValidator1" validationgroup="basicpagegroup" runat="server" ErrorMessage="*Required"  ControlToValidate="EssnQualficationTxt" ForeColor="Red" ></asp:RequiredFieldValidator>
-
-                 
-                
-              </div>
-
-                 
-
-                  <div class="col-md-4 mb-3">
-             <asp:Label ID="servicelbl" runat="server" Text="Period of Service (in Years)"> </asp:Label>
-                  <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="ArmyService" InitialValue="" validationgroup="basicpagegroup" runat="server" ForeColor="Red" /> 
-                  <asp:TextBox ID="ArmyService" runat="server" class="form-control" maxlength="2" placeholder="" value="" ></asp:TextBox>
-                      <br />
-                                   <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="ArmyService" ValidationExpression="^[0-9]+$" runat="server" validationgroup="basicpagegroup" ForeColor="Red" ErrorMessage="enter numbers."></asp:RegularExpressionValidator>
-
-                
-              </div>
-                              
-              
-                
-            </div>
-
-             <div class="row">
-                    <div class="col-md-4 mb-3">
-                                     <asp:Label ID="pwd" runat="server" Text="Whether Person with Disability(PWD):"> </asp:Label>
+                                     <asp:Label ID="pwd" runat="server" Text="Whether Person with Benchmark Disability(PwBD):"> </asp:Label>
 
                 
 <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="pwdDrop" InitialValue="0" validationgroup="basicpagegroup" runat="server" ForeColor="Red" />                  
@@ -314,9 +262,43 @@
                       <asp:ListItem Selected="True" Value="No">No</asp:ListItem>
                   </asp:DropDownList>
                 
-              </div>              
-                                               
+              </div>
+
+                 <div class="col-md-4 mb-3">
+              <div class="auto-style5">
+                <label for="ArmyDropLable">Are you an Ex-Servicemen:</label>
+                  <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="ArmyDrop" InitialValue="0" validationgroup="basicpagegroup" runat="server" ForeColor="Red" />
+                  
+                  <asp:DropDownList ID="ArmyDrop" runat="server" class="form-control" placeholder="" value="" AutoPostBack="True" OnSelectedIndexChanged="ArmyDrop_SelectedIndexChanged"  >
+                       <asp:ListItem Selected="True" Value="0">--Select--</asp:ListItem>
+                       <asp:ListItem Value="Yes">Yes</asp:ListItem>
+                      <asp:ListItem Value="No">No</asp:ListItem>
+                     
+
+                  </asp:DropDownList>
+
+                
+              </div>
+                     </div>            
+                    
+
+                 
+
+                  <div class="col-md-4 mb-3">
+             <asp:Label ID="servicelbl" runat="server" Text="Period of Service (in Years)"> </asp:Label>
+                  <asp:RequiredFieldValidator ErrorMessage="*Required" ControlToValidate="ArmyService" InitialValue="" validationgroup="basicpagegroup" runat="server" ForeColor="Red" /> 
+                  <asp:TextBox ID="ArmyService" runat="server" class="form-control" maxlength="2" placeholder="" value="0" ></asp:TextBox>
+                      <br />
+                                   <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="ArmyService" ValidationExpression="^[0-9]+$" runat="server" validationgroup="basicpagegroup" ForeColor="Red" ErrorMessage="Enter Numbers."></asp:RegularExpressionValidator>
+
+                
+              </div>
+                              
               
+                
+            </div>
+
+             <div class="row">      
                 
             </div>
 
@@ -375,7 +357,7 @@
                     </div>
 
                 <div class="col-4">
-               <label for="address1">state</label>
+               <label for="address1">State</label>
                  <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ForeColor="Red" ErrorMessage="*Required" ControlToValidate="prestateText" validationgroup="basicpagegroup"></asp:RequiredFieldValidator>
                   
                   <asp:TextBox ID="prestateText" runat="server" class="form-control"  placeholder="" value="" ></asp:TextBox>
@@ -385,7 +367,9 @@
                <label for="address1">Pincode</label>
                  <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ForeColor="Red" ErrorMessage="*Required" ControlToValidate="pincodeText" validationgroup="basicpagegroup"></asp:RequiredFieldValidator>
                   
-                  <asp:TextBox ID="pincodeText" runat="server" class="form-control"  placeholder="" value="" ></asp:TextBox>
+                  <asp:TextBox ID="pincodeText" runat="server" class="form-control"  placeholder="" value="" MaxLength="6" ></asp:TextBox>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator3" ControlToValidate="pincodeText" ValidationExpression="^[0-9]+$" runat="server" validationgroup="basicpagegroup" ForeColor="Red" ErrorMessage="Enter Numbers."></asp:RegularExpressionValidator>
+
                     </div>
           </div>        
         </div>

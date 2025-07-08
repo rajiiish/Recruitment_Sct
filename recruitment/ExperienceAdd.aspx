@@ -51,23 +51,23 @@
                 format: "dd/mm/yyyy"
             });
         });
-    
-         document.addEventListener("DOMContentLoaded", function (event) {
-             var scrollpos = localStorage.getItem('scrollpos');
-             if (scrollpos) window.scrollTo(0, scrollpos);
-         });
 
-         window.onbeforeunload = function (e) {
-             localStorage.setItem('scrollpos', window.scrollY);
-         };
-     </script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function (e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>
 
 
     
     <div class="container">
         <div class="bg-light  text-center">
-        <p >Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br/>
-            (fields marked with * are mandatory)</p>
+        <p class="alert-info">Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br/>
+        &nbsp; PLEASE BE VERY CAREFUL WHILE FILLING THE APPLICATION FORM </p>
         <p >Candidate Registration Number:
               <asp:Label ID="regidlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="Blue"></asp:Label>
        Application ID: <asp:Label ID="appidnolbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label> 

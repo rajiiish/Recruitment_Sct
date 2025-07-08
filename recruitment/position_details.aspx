@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="position_details.aspx.cs" Inherits="recruitment.position_details" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Position_Details.aspx.cs" Inherits="recruitment.position_details" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .auto-style2 {
@@ -39,10 +39,9 @@
    <asp:ListItem Value="Select">-Select-</asp:ListItem>
                
 
-        <asp:ListItem Value="JSA-GEN">Junior Secretariat Assistant(JSA-GEN)</asp:ListItem>
-        <asp:ListItem Value="JSA-FA">Junior Secretariat Assistant(JSA-F&A)</asp:ListItem>
-        <asp:ListItem Value="JSA-SP">Junior Secretariat Assistant(JSA-S&P)</asp:ListItem>
-        <asp:ListItem Value="STENO-01">Junior Stenographer(Steno)</asp:ListItem>
+        <asp:ListItem Value="SCT">Scientist</asp:ListItem>
+        <asp:ListItem Value="SRSCT">Senior Scientist</asp:ListItem>
+        
 
         </asp:DropDownList>
         &nbsp;<asp:Label ID="appidnolbl" runat="server" Text=""></asp:Label>

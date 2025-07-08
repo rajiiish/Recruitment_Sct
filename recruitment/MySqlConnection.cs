@@ -18,10 +18,11 @@ namespace recruitment
                 //string connectionString = @"Data Source=DESKTOP-DPB8T2S\rajesh;Initial Catalog=projectasst;Integrated Security=true";
                 string connectionString = ConfigurationManager.ConnectionStrings["onlineapplicationConnectionString1"].ConnectionString;
 
-                SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
+            {
                 connection.Open();
                 return connection;
-            
+            }
             
         }
     }

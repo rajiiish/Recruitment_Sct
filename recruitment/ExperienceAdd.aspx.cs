@@ -22,9 +22,9 @@ namespace recruitment
             {
                 if (!IsPostBack)
                 {
-                    regid();
+                    Regid();
                     AppCompletion();
-                    datashow();                    
+                    Datashow();
                     YesOrNo();
 
                     if (expdetailsdrop.SelectedValue == "No")
@@ -56,7 +56,7 @@ namespace recruitment
 
             //datetimelbl.Text = serverTime.ToString("dd/MM/yyyy");
         }
-        public void regid()
+        public void Regid()
         {
             regidlbl.Text = Convert.ToString(Session["can_regno"]);
 
@@ -64,7 +64,7 @@ namespace recruitment
 
             applyhpostlbl.Text = Convert.ToString(Session["postname"]);
 
-            
+
 
             //firstName.Text = Convert.ToString(Session["fname"]);
             //lastName.Text = Convert.ToString(Session["lname"]);
@@ -78,34 +78,37 @@ namespace recruitment
                 string canregdbtext = Convert.ToString(Session["can_regno"]);
                 string appregnotext = Convert.ToString(Session["S_appregno"]);
 
-                SqlConnection connection = MySqlConnection.Recruitmentcon();
-                string sql1 = "SELECT * FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
-
-                SqlCommand command = new SqlCommand(sql1, connection);
-                command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
-                command.Parameters.AddWithValue("@appregnotext", appregnotext);
-
-                SqlDataReader dr = command.ExecuteReader();
-                if (dr.HasRows)
+                using (SqlConnection connection = MySqlConnection.Recruitmentcon())
                 {
-                    while (dr.Read())
+                    string sql1 = "SELECT * FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
+
+                    SqlCommand command = new SqlCommand(sql1, connection);
+                    command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
+                    command.Parameters.AddWithValue("@appregnotext", appregnotext);
+
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            string complete = dr.GetValue(27).ToString();
+
+                            if (complete == "Yes")
+                            {
+                                Response.Redirect("position_details.aspx");
+                            }
+
+                        }
+                    }
+                    else
                     {
 
-                        string complete = dr.GetValue(27).ToString();
-
-                        if (complete == "Yes")
-                        {
-                            Response.Redirect("position_details.aspx");
-                        }
-
+                        Response.Redirect("position_details.aspx");
                     }
+                    connection.Close();
+                    connection.Dispose();
                 }
-                else
-                {
-
-                    Response.Redirect("position_details.aspx");
-                }
-                connection.Close();
             }
 
 
@@ -117,7 +120,7 @@ namespace recruitment
             }
 
         }
-        private void duration()
+        private void Duration()
         {
 
 
@@ -128,15 +131,15 @@ namespace recruitment
 
                 TimeSpan objTimeSpan = to - fm;
 
-               
+
 
                 int Years = to.Year - fm.Year;
                 int month = to.Month - fm.Month;
                 double Days = to.Day - fm.Day;
-               // double Days = Convert.ToDouble(objTimeSpan.TotalDays);
+                // double Days = Convert.ToDouble(objTimeSpan.TotalDays);
 
-                
-                
+
+
                 totalexptxt.Text = Years + "  Year  " + month + "  Months " + Days + "  Days";
 
 
@@ -165,6 +168,7 @@ namespace recruitment
                     cmd1.ExecuteNonQuery();
                     YesOrNo();
                     conn.Close();
+                    conn.Dispose();
                 }
             }
 
@@ -184,29 +188,32 @@ namespace recruitment
 
 
 
-                SqlConnection connection = MySqlConnection.Recruitmentcon();
-                string sql1 = "SELECT IsExperienced FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
-
-                SqlCommand command = new SqlCommand(sql1, connection);
-                command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
-                command.Parameters.AddWithValue("@appregnotext", appregnotext);
-
-                SqlDataReader dr = command.ExecuteReader();
-                if (dr.HasRows)
+                using (SqlConnection connection = MySqlConnection.Recruitmentcon())
                 {
-                    while (dr.Read())
+                    string sql1 = "SELECT IsExperienced FROM basicdetailsNew WHERE can_regno = @canregdbtest and appregno = @appregnotext ";
+
+                    SqlCommand command = new SqlCommand(sql1, connection);
+                    command.Parameters.AddWithValue("@canregdbtest", canregdbtext);
+                    command.Parameters.AddWithValue("@appregnotext", appregnotext);
+
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
                     {
-                        expdetailsdrop.SelectedValue = dr.GetValue(0).ToString();
+                        while (dr.Read())
+                        {
+                            expdetailsdrop.SelectedValue = dr.GetValue(0).ToString();
+                        }
                     }
-                }
-                else
-                {
-                    // Response.Redirect("position_details.aspx");
-                    // Response.Write("<script>alert('Invalid credentials');</script>");
+                    else
+                    {
+                        // Response.Redirect("position_details.aspx");
+                        // Response.Write("<script>alert('Invalid credentials');</script>");
 
 
+                    }
+                    connection.Close();
+                    connection.Dispose();
                 }
-                connection.Close();
             }
             catch (Exception ex)
             {
@@ -214,14 +221,14 @@ namespace recruitment
 
             }
         }
-        private void totalduration()
+        private void Totalduration()
         {
-            
+
             DateTime startDate = Convert.ToDateTime(fromtxt.Text);
             DateTime endDate = Convert.ToDateTime(totxt.Text);
 
             TimeSpan objTimeSpan = endDate - startDate;
-                       
+
             int days = 0;
             int months = 0;
             int years = 0;
@@ -252,7 +259,7 @@ namespace recruitment
             totalexptxt.Text = (string.Format("{0} years, {1} months, {2} days", years, months, days));
 
         }
-        private void datashow()
+        private void Datashow()
         {
             // GridView1.Columns[0].Visible = false;
             //Label2.Text = GridView1.Columns[0].ToString();
@@ -282,19 +289,20 @@ namespace recruitment
                             }
                         }
                         conn.Close();
+                        conn.Dispose();
                     }
                 }
 
                 catch (Exception ex)
                 {
                     Response.Write("<script> alert (" + ex.Message + "');</script>");
-                   
+
                 }
 
             }
         }
 
-        private void addexp()
+        private void Addexp()
         {
             if (String.IsNullOrEmpty(employertxt.Text))
 
@@ -383,9 +391,9 @@ namespace recruitment
                         cmd.Parameters.AddWithValue("@todate", todate);
                         cmd.Parameters.AddWithValue("@totalexp", totalexp);
                         cmd.Parameters.AddWithValue("@expdetails", expdetails);
-                        
+
                         cmd.ExecuteNonQuery();
-                        datashow();
+                        Datashow();
                         UpdateBasicDetailsTable();
 
                         employertxt.Text = "";
@@ -395,6 +403,7 @@ namespace recruitment
                         totxt.Text = "";
                         expbrieftxt.Text = "";
                         conn.Close();
+                        conn.Dispose();
                     }
                 }
 
@@ -412,7 +421,7 @@ namespace recruitment
 
         protected void Addbutton_Click(object sender, EventArgs e)
         {
-            addexp();
+            Addexp();
         }
 
         protected void totxt_TextChanged(object sender, EventArgs e)
@@ -420,7 +429,7 @@ namespace recruitment
             // duration();
             if (fromtxt.Text != "" && totxt.Text != "")
             {
-                totalduration();
+                Totalduration();
             }
 
             else
@@ -429,7 +438,7 @@ namespace recruitment
 
             }
 
-                
+
         }
 
         protected void fromtxt_TextChanged(object sender, EventArgs e)
@@ -441,8 +450,8 @@ namespace recruitment
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
-         //   int rowindex = ((GridViewRow)(sender as Control).NamingContainer).RowIndex;
-        //    int canregtext = Convert.ToInt32(GridView1.Rows[rowindex].Cells[0].Text);
+            //   int rowindex = ((GridViewRow)(sender as Control).NamingContainer).RowIndex;
+            //    int canregtext = Convert.ToInt32(GridView1.Rows[rowindex].Cells[0].Text);
 
 
             int rowindex = ((GridViewRow)(sender as Control).NamingContainer).RowIndex;
@@ -451,23 +460,26 @@ namespace recruitment
 
             int canregtext = Convert.ToInt32(GridView1.DataKeys[rowindex].Value);
 
-            SqlConnection conn = MySqlConnection.Recruitmentcon();
-
+            using (SqlConnection conn = MySqlConnection.Recruitmentcon())
             {
-                using (SqlCommand cmd = new SqlCommand("DELETE experience WHERE id = @canreg"))
+
                 {
-                    cmd.Parameters.AddWithValue("@canreg", canregtext);
-                    cmd.Connection = conn;
-                    //con.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
+                    using (SqlCommand cmd = new SqlCommand("DELETE experience WHERE id = @canreg"))
+                    {
+                        cmd.Parameters.AddWithValue("@canreg", canregtext);
+                        cmd.Connection = conn;
+                        //con.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
                 }
+                this.Datashow();
+                conn.Close();
+                conn.Dispose();
             }
-            this.datashow();
-            conn.Close();
         }
 
-        private void stepsComplete()
+        private void StepsComplete()
         {
             string canregdbtest = Convert.ToString(Session["can_regno"]);
             string vappidnolbl = Convert.ToString(Session["S_appregno"]);
@@ -490,6 +502,7 @@ namespace recruitment
 
                     cmd.ExecuteNonQuery();
                     conn.Close();
+                    conn.Dispose();
                 }
             }
             catch (Exception ex)
@@ -518,14 +531,14 @@ namespace recruitment
 
             {
                 UpdateBasicDetailsTable();
-                stepsComplete();
+                StepsComplete();
                 Response.Redirect("Candidate_Home.aspx");
             }
         }
 
 
-           
-      
+
+
 
         protected void expdetailsdrop_SelectedIndexChanged(object sender, EventArgs e)
         {

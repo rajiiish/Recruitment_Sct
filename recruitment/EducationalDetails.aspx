@@ -60,19 +60,12 @@ hr.solid {
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(event) { 
-            var scrollpos = localStorage.getItem('scrollpos');
-            if (scrollpos) window.scrollTo(0, scrollpos);
-        });
 
-        window.onbeforeunload = function(e) {
-            localStorage.setItem('scrollpos', window.scrollY);
-        };
-     </script>
+</script>
      <div class="container">
         <div class="bg-light  text-center">
-        <p >Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br />
-        &nbsp;(fields marked with * are mandatory)</p>
+        <p class="alert-info">Note: Don't input any special characters or punctuation marks. Input only alphanumeric characters.<br/>
+        &nbsp; PLEASE BE VERY CAREFUL WHILE FILLING THE APPLICATION FORM </p>
         <p >Candidate Registration Number:
               <asp:Label ID="regidlbl" runat="server" Text="Label" Font-Bold="True" ForeColor="Blue"></asp:Label>
        Application ID: <asp:Label ID="appidnolbl" runat="server" Text="Label" Font-Bold="True" ForeColor="#006600"></asp:Label> 
@@ -129,7 +122,7 @@ hr.solid {
             </thead>
             <tbody>
                 <tr>
-                    <td><asp:DropDownList ID="coursedropdown" runat="server" AutoPostBack="True" OnSelectedIndexChanged="coursedropdown_SelectedIndexChanged">
+                    <td><asp:DropDownList ID="coursedropdown" class="btn btn-white border-dark dropdown-toggle" runat="server" AutoPostBack="True" OnSelectedIndexChanged="coursedropdown_SelectedIndexChanged">
     <asp:ListItem Value="0">--Select--</asp:ListItem>
     <asp:ListItem Value="SSC/SSLC/10th">SSC/SSLC/10th</asp:ListItem>
     <asp:ListItem Value="HSC/PUC/12th">HSC/PUC/12th</asp:ListItem>
@@ -141,15 +134,15 @@ hr.solid {
 </asp:DropDownList>
                         <br />
                         <asp:RequiredFieldValidator ErrorMessage="Select Qualification" ControlToValidate="coursedropdown" InitialValue="0" validationgroup="regpagegroup" runat="server" ForeColor="Red" Font-Size="Small" ID="RequiredFieldValidator9" /></td>
-                    <td><asp:TextBox ID="nameofdegree" runat="server"></asp:TextBox>
+                    <td><asp:TextBox ID="nameofdegree" class="form-control border-dark" runat="server"></asp:TextBox>
                         <br />
                         <asp:RequiredFieldValidator ErrorMessage="Enter Name of the Degree" ControlToValidate="nameofdegree"  validationgroup="regpagegroup" runat="server" ForeColor="Red" Display="Dynamic" Font-Size="Small" ID="RequiredFieldValidator11" />
                          </td>
-                    <td><asp:TextBox ID="subjecttxt" runat="server"></asp:TextBox> 
+                    <td><asp:TextBox ID="subjecttxt" class="form-control border-dark" runat="server"></asp:TextBox> 
                         <br />
                          <asp:RequiredFieldValidator ErrorMessage="Enter Main Subject Name" ControlToValidate="subjecttxt"  validationgroup="regpagegroup" runat="server" ForeColor="Red" Display="Dynamic" ID="RequiredFieldValidator7" Font-Size="Small" />
                     </td>
-                    <td><asp:TextBox ID="institutetxt" runat="server" Width="285px"></asp:TextBox> 
+                    <td><asp:TextBox ID="institutetxt" class="form-control border-dark" runat="server" Width="285px"></asp:TextBox> 
                         <br />
                          <asp:RequiredFieldValidator ErrorMessage="Enter Main Institute/University/College Name" ControlToValidate="institutetxt"  validationgroup="regpagegroup" runat="server" ForeColor="Red" Display="Dynamic" ID="RequiredFieldValidator8" Font-Size="Small" /> </td>
                 </tr>
@@ -167,13 +160,13 @@ hr.solid {
             <tbody>
                 <tr>
                     <td>
-                        <asp:TextBox ID="pmarkstext" runat="server" Height="30 px" Width="80px"></asp:TextBox> <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="pmarkstext"
+                        <asp:TextBox ID="pmarkstext" class="form-control border-dark" runat="server" Height="30 px" Width="80px"></asp:TextBox> <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="pmarkstext"
                                                                                                                                    CultureInvariantValues="True" ErrorMessage="Enter Percentage" MaximumValue="100.00" MinimumValue="0.00" Type="Double" ValidationGroup="regpagegroup" CssClass="auto-style5"></asp:RangeValidator>
                         <br />
                         <asp:RequiredFieldValidator ErrorMessage="Enter Marks" ControlToValidate="pmarkstext"  validationgroup="regpagegroup" runat="server" ForeColor="Red" Display="Dynamic" Font-Size="Small" ID="RequiredFieldValidator12" />
                     </td>
                     <td>
-                        <asp:TextBox ID="pyeartxt" runat="server" MaxLength="4" Height="30 px" Width="80px"></asp:TextBox>  <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="pyeartxt"
+                        <asp:TextBox ID="pyeartxt" class="form-control border-dark" runat="server" MaxLength="4" Height="30 px" Width="80px"></asp:TextBox>  <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="pyeartxt"
                                                                                                                                                             ValidationExpression="^[0-9]+$" runat="server" ValidationGroup="regpagegroup" ErrorMessage="enter only year."></asp:RegularExpressionValidator>
                         <asp:RegularExpressionValidator Display="Dynamic" ControlToValidate="pyeartxt" ID="RegularExpressionValidator2"
                                                         ValidationExpression="^[\s\S]{4,}$" runat="server" ValidationGroup="regpagegroup" ErrorMessage="Enter Year in Correct Formate."></asp:RegularExpressionValidator>
@@ -181,7 +174,7 @@ hr.solid {
                         <asp:RequiredFieldValidator ErrorMessage="Enter Year" ControlToValidate="pyeartxt"  validationgroup="regpagegroup" runat="server" ForeColor="Red" Display="Dynamic" Font-Size="Small" ID="RequiredFieldValidator13" />
                     </td>
                     <td>
-                        <asp:DropDownList ID="Courseclass" runat="server" AutoPostBack="True">
+                        <asp:DropDownList ID="Courseclass" class="btn btn-white border-dark dropdown-toggle" runat="server" AutoPostBack="True">
                             <asp:ListItem Value="0">--Select--</asp:ListItem>
                             <asp:ListItem Value="First Class">First Class</asp:ListItem>
                             <asp:ListItem Value="Second Class"> Second Class</asp:ListItem>
@@ -338,59 +331,7 @@ hr.solid {
     </center> </div>
                 </div>
                    <hr class="solid">
-                        <!-- Additional Qualifcation start  -->
-                       <div class="row">
-                       <div class="col-12">                      
-                                            <center>    <h6 class="card-header text-white  bg-primary ">Add Extra Qualifaction Details :</h6></center>  
-                    
-                                <asp:Panel ID="AddQualPanel" runat="server">
-                                                               <br />
-                                    
-                           <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                <th scope="col">Type of Qualification</th>
-                                <th scope="col">Name of the Qualification </th>
-                                <th scope="col">Institute / Board</th>
-                                <th scope="col">Completed Year</th>
-                                   </tr>
-                                   
-
-
-                                     </thead>
-                               <tr>
-                                   <td><asp:TextBox ID="Qualf1" runat="server" Width="218px"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf2" runat="server"></asp:TextBox>   </td>
-                                   <td><asp:TextBox ID="Qualf3" runat="server" Width="335px"> </asp:TextBox></td>
-                                   <td><asp:TextBox ID="Qualf4" runat="server"></asp:TextBox>  </td>
-                               </tr>
-
-                               <tr>
-                                   <td><asp:TextBox ID="Qualf5" runat="server" Width="218px"></asp:TextBox> </td>
-                                   <td><asp:TextBox ID="Qualf6" runat="server"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf7" runat="server" Width="335px"></asp:TextBox> </td>
-                                   <td><asp:TextBox ID="Qualf8" runat="server"></asp:TextBox>  </td>
-                               </tr>
-                               <tr>
-                                   <td><asp:TextBox ID="Qualf9" runat="server" Width="218px"></asp:TextBox> </td>
-                                   <td><asp:TextBox ID="Qualf10" runat="server"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf11" runat="server" Width="335px"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf12" runat="server"></asp:TextBox>  </td>
-                               </tr>
-                               <tr>
-                                   <td><asp:TextBox ID="Qualf13" runat="server" Width="218px"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf14" runat="server"></asp:TextBox>   </td>
-                                   <td><asp:TextBox ID="Qualf15" runat="server" Width="335px"></asp:TextBox>  </td>
-                                   <td><asp:TextBox ID="Qualf16" runat="server"></asp:TextBox>  </td>
-                               </tr>
-                                
-                               </table>
-                                    </asp:Panel>
-                                     
-                       </div>
-                   </div> 
-
-                   <!-- Additional Qualifcation end  -->
+                      
 
                     <!-- Phd Panel  start 
                    <br />
@@ -414,14 +355,25 @@ hr.solid {
                                 <th scope="col">Ph.D Thesis Title</th>
                                 <th scope="col">Month & Year of PhD awarding</th>
                                 <th scope="col">Name and address of the University from where  the Ph.D is completed</th>
-                                <th scope="col">Breif the Title</th>
+                                
                                    </tr>
                                      </thead>
                                <tr>
                                    <td><asp:TextBox ID="phdtxt1" runat="server" Width="218px"></asp:TextBox> <asp:RequiredFieldValidator ID="RequiredFieldValidator4" validationgroup="educationigroup" runat="server" ErrorMessage="*"  ControlToValidate="phdtxt1" ForeColor="Red" ></asp:RequiredFieldValidator> </td>
                                    <td><asp:TextBox ID="phdtxt2" runat="server"></asp:TextBox>  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" validationgroup="educationigroup" runat="server" ErrorMessage="*"  ControlToValidate="phdtxt2" ForeColor="Red" ></asp:RequiredFieldValidator> </td>
                                    <td><asp:TextBox ID="phdtxt3" runat="server" Width="335px"></asp:TextBox>  <asp:RequiredFieldValidator ID="RequiredFieldValidator5" validationgroup="educationigroup" runat="server" ErrorMessage="*"  ControlToValidate="phdtxt3" ForeColor="Red" ></asp:RequiredFieldValidator></td>
-                                   <td><asp:TextBox ID="phdtxt4" runat="server"></asp:TextBox>  <asp:RequiredFieldValidator ID="RequiredFieldValidator6" validationgroup="educationigroup" runat="server" ErrorMessage="*"  ControlToValidate="phdtxt4" ForeColor="Red" ></asp:RequiredFieldValidator></td>
+                                   
+                               </tr>
+
+                               
+                                    <tr>
+                                
+                                <th colspan="3" scope="col">Breif the Title</th>
+                                   </tr>
+                                    
+                               <tr>
+                                   
+                                   <td colspan="3"><asp:TextBox class="form-control border-dark" TextMode="MultiLine" ID="phdtxt4" runat="server"></asp:TextBox>  <asp:RequiredFieldValidator ID="RequiredFieldValidator6" validationgroup="educationigroup" runat="server" ErrorMessage="*"  ControlToValidate="phdtxt4" ForeColor="Red" ></asp:RequiredFieldValidator></td>
                                </tr>
                                 
                                </table>
@@ -511,6 +463,60 @@ hr.solid {
                    </div> 
                      <!-- Additional Qualifcation end  -->
 
+
+                     <!-- Additional Qualifcation start  -->
+                       <div class="row">
+                       <div class="col-12">                      
+                                            <center>    <h6 class="card-header text-white  bg-primary ">Add Extra Qualifaction Details :</h6></center>  
+                    
+                                <asp:Panel ID="AddQualPanel" runat="server">
+                                                               <br />
+                                    
+                           <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                <th scope="col">Type of Qualification</th>
+                                <th scope="col">Name of the Qualification </th>
+                                <th scope="col">Institute / Board</th>
+                                <th scope="col">Completed Year</th>
+                                   </tr>
+                                   
+
+
+                                     </thead>
+                               <tr>
+                                   <td><asp:TextBox ID="Qualf1" runat="server" Width="218px"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf2" runat="server"></asp:TextBox>   </td>
+                                   <td><asp:TextBox ID="Qualf3" runat="server" Width="335px"> </asp:TextBox></td>
+                                   <td><asp:TextBox ID="Qualf4" runat="server"></asp:TextBox>  </td>
+                               </tr>
+
+                               <tr>
+                                   <td><asp:TextBox ID="Qualf5" runat="server" Width="218px"></asp:TextBox> </td>
+                                   <td><asp:TextBox ID="Qualf6" runat="server"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf7" runat="server" Width="335px"></asp:TextBox> </td>
+                                   <td><asp:TextBox ID="Qualf8" runat="server"></asp:TextBox>  </td>
+                               </tr>
+                               <tr>
+                                   <td><asp:TextBox ID="Qualf9" runat="server" Width="218px"></asp:TextBox> </td>
+                                   <td><asp:TextBox ID="Qualf10" runat="server"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf11" runat="server" Width="335px"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf12" runat="server"></asp:TextBox>  </td>
+                               </tr>
+                               <tr>
+                                   <td><asp:TextBox ID="Qualf13" runat="server" Width="218px"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf14" runat="server"></asp:TextBox>   </td>
+                                   <td><asp:TextBox ID="Qualf15" runat="server" Width="335px"></asp:TextBox>  </td>
+                                   <td><asp:TextBox ID="Qualf16" runat="server"></asp:TextBox>  </td>
+                               </tr>
+                                
+                               </table>
+                                    </asp:Panel>
+                                     
+                       </div>
+                   </div> 
+
+                   <!-- Additional Qualifcation end  -->
 
               </div>
         </div>

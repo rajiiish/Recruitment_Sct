@@ -90,16 +90,14 @@
     <Content Include="App_Data\onlineapplication_log.ldf">
       <DependentUpon>onlineapplication.mdf</DependentUpon>
     </Content>
-    <Content Include="basicinformation.aspx" />
     <Content Include="BasicInformationAdd.aspx" />
-    <Content Include="bookissue.aspx" />
     <Content Include="bootstrap\css\bootstrap.css" />
     <Content Include="bootstrap\css\bootstrap.min.css" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\jquery-3.5.1.slim.min.js" />
     <Content Include="bootstrap\js\popper.min.js" />
     <Content Include="Candidate_Home.aspx" />
-    <Content Include="candidate_registration.aspx" />
+    <Content Include="Registration.aspx" />
     <Content Include="can_profile.aspx" />
     <Content Include="Captcha.aspx" />
     <Content Include="connectiontest.aspx" />
@@ -1808,12 +1806,10 @@
     <Content Include="imgs\wrong.png" />
     <Content Include="Payment.aspx" />
     <Content Include="PDFUpload.aspx" />
-    <Content Include="position_details.aspx" />
+    <Content Include="Position_Details.aspx" />
     <Content Include="PreviewApplication.aspx" />
     <Content Include="PreviewDetails.aspx" />
     <Content Include="ProfessionalAdd.aspx" />
-    <Content Include="publisheradd.aspx" />
-    <Content Include="registration.aspx" />
     <Content Include="reg_redirect.aspx" />
     <Content Include="rms_admin.aspx" />
     <Content Include="SingleApplicationPreview.aspx" />
@@ -1889,26 +1885,12 @@
     <Compile Include="ApplicationManagement.aspx.designer.cs">
       <DependentUpon>ApplicationManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="basicinformation.aspx.cs">
-      <DependentUpon>basicinformation.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="basicinformation.aspx.designer.cs">
-      <DependentUpon>basicinformation.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BasicInformationAdd.aspx.cs">
       <DependentUpon>BasicInformationAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BasicInformationAdd.aspx.designer.cs">
       <DependentUpon>BasicInformationAdd.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="bookissue.aspx.cs">
-      <DependentUpon>bookissue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="bookissue.aspx.designer.cs">
-      <DependentUpon>bookissue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Candidate_Home.aspx.cs">
       <DependentUpon>Candidate_Home.aspx</DependentUpon>
@@ -1917,12 +1899,12 @@
     <Compile Include="Candidate_Home.aspx.designer.cs">
       <DependentUpon>Candidate_Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="candidate_registration.aspx.cs">
-      <DependentUpon>candidate_registration.aspx</DependentUpon>
+    <Compile Include="Registration.aspx.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="candidate_registration.aspx.designer.cs">
-      <DependentUpon>candidate_registration.aspx</DependentUpon>
+    <Compile Include="Registration.aspx.designer.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
     </Compile>
     <Compile Include="can_profile.aspx.cs">
       <DependentUpon>can_profile.aspx</DependentUpon>
@@ -2061,12 +2043,12 @@
     <Compile Include="PDFUpload.aspx.designer.cs">
       <DependentUpon>PDFUpload.aspx</DependentUpon>
     </Compile>
-    <Compile Include="position_details.aspx.cs">
-      <DependentUpon>position_details.aspx</DependentUpon>
+    <Compile Include="Position_Details.aspx.cs">
+      <DependentUpon>Position_Details.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="position_details.aspx.designer.cs">
-      <DependentUpon>position_details.aspx</DependentUpon>
+    <Compile Include="Position_Details.aspx.designer.cs">
+      <DependentUpon>Position_Details.aspx</DependentUpon>
     </Compile>
     <Compile Include="PreviewApplication.aspx.cs">
       <DependentUpon>PreviewApplication.aspx</DependentUpon>
@@ -2090,21 +2072,7 @@
       <DependentUpon>ProfessionalAdd.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="publisheradd.aspx.cs">
-      <DependentUpon>publisheradd.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="publisheradd.aspx.designer.cs">
-      <DependentUpon>publisheradd.aspx</DependentUpon>
-    </Compile>
     <Compile Include="PwdEncryption.cs" />
-    <Compile Include="registration.aspx.cs">
-      <DependentUpon>registration.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="registration.aspx.designer.cs">
-      <DependentUpon>registration.aspx</DependentUpon>
-    </Compile>
     <Compile Include="reg_redirect.aspx.cs">
       <DependentUpon>reg_redirect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2226,6 +2194,7 @@
     <Content Include="fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="admin.Master" />
     <Content Include="files\HOW_PAY_SBI_COLLECT_CMC.pdf" />
+    <Content Include="libman.json" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">

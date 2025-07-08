@@ -43,7 +43,7 @@
                        <center>  <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="Large" ForeColor="#CC0000"></asp:Label></center>
                         <div class="form-group">
                             <label>New Applicants please Register </label>
-                           <a href="candidate_registration.aspx"><input class="btn btn-info btn-block btn-md" id="Button2" type="button" value="Register" /></a>
+                           <a href="Registration.aspx"><input class="btn btn-info btn-block btn-md" id="Button2" type="button" value="Register" /></a>
                         </div>
                      </div>
                   </div>

@@ -21,7 +21,7 @@ namespace recruitment
             {
                 if (!IsPostBack)
                 {
-                    loaddataBadicinformation();
+                    LoadDataBasicInformation();
                     YesOrNo();
                     regid();
 
@@ -34,7 +34,7 @@ namespace recruitment
                 Response.Redirect("userlogin.aspx");
             }
 
-           
+
         }
 
         public void regid()
@@ -45,7 +45,7 @@ namespace recruitment
 
             applyhpostlbl.Text = Convert.ToString(Session["postname"]);
 
-            
+
         }
         private void YesOrNo()
         {
@@ -69,21 +69,21 @@ namespace recruitment
                 {
                     while (dr.Read())
                     {
-                        string gender  = dr.GetValue(0).ToString();
+                        string gender = dr.GetValue(0).ToString();
                         string cast = dr.GetValue(1).ToString();
                         string csiremp = dr.GetValue(2).ToString();
                         string pwd = dr.GetValue(3).ToString();
                         string exarmy = dr.GetValue(4).ToString();
 
 
-                        if ((gender == "Female") || (cast == "SC") || (cast == "ST") || (csiremp == "Yes") || (pwd == "Yes") || (exarmy == "ExArmy") || (exarmy == "JCO"))
+                        if ((gender == "Female") || (cast == "SC") || (cast == "ST") || (csiremp == "Yes") || (pwd == "Yes") || (exarmy == "Yes") || (exarmy == "JCO"))
 
-                     //    if ( (gender == "Female") || (cast == "SC") || (cast == "ST") || (csiremp == "Yes") || (pwd == "Yes") || (exarmy == "ExArmy") || (exarmy == "JCO") )
+                        //    if ( (gender == "Female") || (cast == "SC") || (cast == "ST") || (csiremp == "Yes") || (pwd == "Yes") || (exarmy == "ExArmy") || (exarmy == "JCO") )
                         {
                             PaymentPanel.Visible = false;
                         }
 
-                        else 
+                        else
                         {
                             PaymentPanel.Visible = true;
                             PaymentPanelNotification.Visible = true;
@@ -145,7 +145,7 @@ namespace recruitment
             }
         }
 
-        public void loaddataBadicinformation()
+        public void LoadDataBasicInformation()
         {
 
             try
@@ -171,7 +171,7 @@ namespace recruitment
 
                         banknameText.Text = dr.GetValue(0).ToString();
                         paymentdateText.Text = dr.GetValue(1).ToString();
-                        paymodeText.SelectedValue= dr.GetValue(2).ToString();
+                        paymodeText.SelectedValue = dr.GetValue(2).ToString();
 
                     }
                 }
@@ -228,8 +228,8 @@ namespace recruitment
             return false;
         }
 
-        
-        private void addBasicdetails()
+
+        private void AddBasicdetails()
 
         {
             if (PaymentPanel.Visible == false)
@@ -242,16 +242,16 @@ namespace recruitment
 
             else
             {
-               // paymodeText.Text = "SBI Collect";
+                // paymodeText.Text = "SBI Collect";
             }
 
             string vcan_reg = regidlbl.Text;
-            string vappidnolbl = appidnolbl.Text;           
-          
+            string vappidnolbl = appidnolbl.Text;
+
             string vbanknameText = banknameText.Text;
             DateTime vpaymentdateText = Convert.ToDateTime(paymentdateText.Text);
             string vpaymodeText = paymodeText.SelectedValue;
-           
+
             try
             {
                 using (SqlConnection conn = MySqlConnection.Recruitmentcon())
@@ -261,12 +261,12 @@ namespace recruitment
 
                     SqlCommand cmd = new SqlCommand(insertquery, conn);
                     cmd.Parameters.AddWithValue("@vcan_reg", vcan_reg);
-                    cmd.Parameters.AddWithValue("@vappidnolbl", vappidnolbl);   
-                  
+                    cmd.Parameters.AddWithValue("@vappidnolbl", vappidnolbl);
+
                     cmd.Parameters.AddWithValue("@vbanknameText", vbanknameText);
                     cmd.Parameters.AddWithValue("@vpaymentdateText", vpaymentdateText.ToString("dd-MM-yyyy"));
                     cmd.Parameters.AddWithValue("@vpaymodeText", vpaymodeText);
-                   
+
                     cmd.ExecuteNonQuery();
                     stepsComplete();
                     Response.Redirect("Candidate_Home.aspx");
@@ -282,7 +282,7 @@ namespace recruitment
 
         protected void SaveDetails_Click(object sender, EventArgs e)
         {
-            
+
 
             if (CheckBankRefNumber())
             {
@@ -305,24 +305,27 @@ namespace recruitment
                     SqlDataReader dr = command.ExecuteReader();
                     if (dr.HasRows)
                     {
-                        while (dr.Read())                   
+                        while (dr.Read())
                         {
                             string dbRefname = dr.GetValue(0).ToString();
 
-                            if (dbRefname  == reftxt)
+                            if (dbRefname == reftxt)
                             {
-                                addBasicdetails();
+                                AddBasicdetails();
                             }
 
                             else
                             {
                                 PaymentErrorlbl.Text = "Payment Reference Details already filled for another post.";
 
+
+                                Response.Write("<script> alert ('Payment Reference Details already filled for another post.');</script>");
+
                             }
 
                         }
                     }
-                   
+
                     connection.Close();
                 }
 
@@ -332,11 +335,11 @@ namespace recruitment
 
                 }
 
-               
+
             }
             else
             {
-                addBasicdetails();
+                AddBasicdetails();
             }
             //Response.Redirect("Candidate_Home.aspx");
         }

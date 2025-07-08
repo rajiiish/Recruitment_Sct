@@ -35,56 +35,61 @@ namespace recruitment
             string postname = PostDropDownList.SelectedItem.ToString();
             int c = 0;
 
-           
-                SqlConnection connection = MySqlConnection.Recruitmentcon();
 
-                SqlCommand cmd = new SqlCommand("SELECT JSA_GEN, JSA_FA, JSA_SP, STENO FROM appno ", connection);
+            using (SqlConnection connection = MySqlConnection.Recruitmentcon())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT SCT, SRSCT FROM appno ", connection);
+                
                 SqlDataAdapter da1 = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da1.Fill(ds);
                 //  string i = ds.Tables[0].Rows[0]["applicant_count"].ToString();
-                string j = ds.Tables[0].Rows[0]["JSA_GEN"].ToString();
-                string k = ds.Tables[0].Rows[0]["JSA_FA"].ToString();
-                string l = ds.Tables[0].Rows[0]["JSA_SP"].ToString();
-                string m = ds.Tables[0].Rows[0]["STENO"].ToString();
+                string j = ds.Tables[0].Rows[0]["SCT"].ToString();
+                string k = ds.Tables[0].Rows[0]["SRSCT"].ToString();
+                //   string l = ds.Tables[0].Rows[0]["JSA_SP"].ToString();
+                //    string m = ds.Tables[0].Rows[0]["STENO"].ToString();
 
 
                 if (PostDropDownList.SelectedIndex == 1)
                 {
                     int a = Convert.ToInt32(j);
-                     c = a + 1;
+                    c = a + 1;
 
-                    SqlCommand cmd1 = new SqlCommand("UPDATE appno SET JSA_GEN=JSA_GEN+1", connection);
+                    SqlCommand cmd1 = new SqlCommand("UPDATE appno SET SCT=SCT+1", connection);
                     cmd1.ExecuteNonQuery();
 
                 }
 
-            else if (PostDropDownList.SelectedIndex == 2)
-            {
-                int a = Convert.ToInt32(k);
-                c = a + 1;
-                SqlCommand cmd1 = new SqlCommand("UPDATE appno SET JSA_FA=JSA_FA+1", connection);
-                cmd1.ExecuteNonQuery();
+                else if (PostDropDownList.SelectedIndex == 2)
+                {
+                    int a = Convert.ToInt32(k);
+                    c = a + 1;
+                    SqlCommand cmd1 = new SqlCommand("UPDATE appno SET SRSCT=SRSCT+1", connection);
+                    cmd1.ExecuteNonQuery();
 
+                }
+
+                //else if (PostDropDownList.SelectedIndex == 3)
+                //{
+                //    int a = Convert.ToInt32(l);
+                //    c = a + 1;
+                //    SqlCommand cmd1 = new SqlCommand("UPDATE appno SET JSA_SP=JSA-SP+1", connection);
+                //    cmd1.ExecuteNonQuery();
+
+                //}
+
+                //else if (PostDropDownList.SelectedIndex == 4)
+                //{
+                //    int a = Convert.ToInt32(m);
+                //    c = a + 1;
+                //    SqlCommand cmd1 = new SqlCommand("UPDATE appno SET STENO=STENO+1", connection);
+                //    cmd1.ExecuteNonQuery();
+                //}
+                connection.Close();
+                connection.Dispose();
+                return c;
+                
             }
-
-            else if (PostDropDownList.SelectedIndex == 3)
-            {
-                int a = Convert.ToInt32(l);
-                c = a + 1;
-                SqlCommand cmd1 = new SqlCommand("UPDATE appno SET JSA_SP=JSA-SP+1", connection);
-                cmd1.ExecuteNonQuery();
-
-            }
-
-            else if (PostDropDownList.SelectedIndex == 4)
-            {
-                int a = Convert.ToInt32(m);
-                c = a + 1;
-                SqlCommand cmd1 = new SqlCommand("UPDATE appno SET STENO=STENO+1", connection);
-                cmd1.ExecuteNonQuery();
-            }
-            return c;
         }
         
 
@@ -128,89 +133,86 @@ namespace recruitment
 
                 string vno = "No";
 
-                SqlConnection connection = MySqlConnection.Recruitmentcon();
 
 
-               // SqlCommand cmd1 = new SqlCommand("UPDATE appno SET applicant_count=applicant_count+1", connection);
+                using (SqlConnection connection1 = MySqlConnection.Recruitmentcon())
+                {
 
-               // cmd1.ExecuteNonQuery();
-
-                //for adding details in basicdetaisl table
-
-                SqlConnection connection1 = MySqlConnection.Recruitmentcon();
-                string sql2 = "Insert into basicdetailsNew(can_regno,postcode,postdetails,appregno, IsExperienced, IsForignVist,UnderBond,IsRelativeCSIR,SSLC,HSC,ITI,DIPLOMA,UG,PG,PHD,GATE,ExArmy,PermentGovtStaff,pwd,IsCompleted, IsResearchPub, IsPatent,AgeRelaxCatagory,SSLCPmarks,ITIPmarks,HSCPmarks,DIPLOMAPmarks,UGPmarks,PGPmarks)values(@canreg,@pcode,@postdetails,@appregno,@vexperieced,@vforignvisit,@vunderbond,@vcsirrelative,@vsslc,@vhsc,@viti,@vdip,@vug,@vpg,@vphd,@vgate,@vExArmy,@vPermentGovtStaff,@vpwd,@vcompleted,@vrpub,@vpat,@vagerlx,@vmarks,@vmarks,@vmarks,@vmarks,@vmarks,@vmarks)";
-                string sql3 = "Insert into ExtraInfo(can_regno,appregno)values(@canreg,@appregno)";
-                string sql4 = "Insert into ApplicationSteps(can_regno,appregno,BasicInfo,Education,Experienced,Profession,AdditionalInfo,Upload,AppFee)values(@canreg,@appregno,@vno,@vno,@vno,@vno,@vno,@vno,@vno)";
-                string sql5 = "Insert into AddQualfications(can_regno,appregno)values(@canreg,@appregno)";
+                    string sql2 = "Insert into basicdetailsNew(can_regno,postcode,postdetails,appregno, IsExperienced, IsForignVist,UnderBond,IsRelativeCSIR,SSLC,HSC,ITI,DIPLOMA,UG,PG,PHD,GATE,ExArmy,PermentGovtStaff,pwd,IsCompleted, IsResearchPub, IsPatent,AgeRelaxCatagory,SSLCPmarks,ITIPmarks,HSCPmarks,DIPLOMAPmarks,UGPmarks,PGPmarks)values(@canreg,@pcode,@postdetails,@appregno,@vexperieced,@vforignvisit,@vunderbond,@vcsirrelative,@vsslc,@vhsc,@viti,@vdip,@vug,@vpg,@vphd,@vgate,@vExArmy,@vPermentGovtStaff,@vpwd,@vcompleted,@vrpub,@vpat,@vagerlx,@vmarks,@vmarks,@vmarks,@vmarks,@vmarks,@vmarks)";
+                    string sql3 = "Insert into ExtraInfo(can_regno,appregno)values(@canreg,@appregno)";
+                    string sql4 = "Insert into ApplicationSteps(can_regno,appregno,BasicInfo,Education,Experienced,Profession,AdditionalInfo,Upload,AppFee)values(@canreg,@appregno,@vno,@vno,@vno,@vno,@vno,@vno,@vno)";
+                    string sql5 = "Insert into AddQualfications(can_regno,appregno)values(@canreg,@appregno)";
 
 
-                SqlCommand cmd2 = new SqlCommand(sql2, connection1);
-                SqlCommand cmd3 = new SqlCommand(sql3, connection1);
-                SqlCommand cmd4 = new SqlCommand(sql4, connection1);
-                SqlCommand cmd5 = new SqlCommand(sql5, connection1);
+                    SqlCommand cmd2 = new SqlCommand(sql2, connection1);
+                    SqlCommand cmd3 = new SqlCommand(sql3, connection1);
+                    SqlCommand cmd4 = new SqlCommand(sql4, connection1);
+                    SqlCommand cmd5 = new SqlCommand(sql5, connection1);
 
-                cmd2.CommandType = CommandType.Text;
-                cmd3.CommandType = CommandType.Text;
-                cmd4.CommandType = CommandType.Text;
-                cmd5.CommandType = CommandType.Text;
+                    cmd2.CommandType = CommandType.Text;
+                    cmd3.CommandType = CommandType.Text;
+                    cmd4.CommandType = CommandType.Text;
+                    cmd5.CommandType = CommandType.Text;
 
-                cmd2.Parameters.AddWithValue("@canreg", canregnobasic);
-                cmd3.Parameters.AddWithValue("@canreg", canregnobasic);
-                cmd4.Parameters.AddWithValue("@canreg", canregnobasic);
-                cmd5.Parameters.AddWithValue("@canreg", canregnobasic);
+                    cmd2.Parameters.AddWithValue("@canreg", canregnobasic);
+                    cmd3.Parameters.AddWithValue("@canreg", canregnobasic);
+                    cmd4.Parameters.AddWithValue("@canreg", canregnobasic);
+                    cmd5.Parameters.AddWithValue("@canreg", canregnobasic);
 
-                cmd2.Parameters.AddWithValue("@pcode", postcode);
+                    cmd2.Parameters.AddWithValue("@pcode", postcode);
 
-                cmd2.Parameters.AddWithValue("@appregno", newappno);
-                cmd3.Parameters.AddWithValue("@appregno", newappno);
-                cmd4.Parameters.AddWithValue("@appregno", newappno);
-                cmd5.Parameters.AddWithValue("@appregno", newappno);
+                    cmd2.Parameters.AddWithValue("@appregno", newappno);
+                    cmd3.Parameters.AddWithValue("@appregno", newappno);
+                    cmd4.Parameters.AddWithValue("@appregno", newappno);
+                    cmd5.Parameters.AddWithValue("@appregno", newappno);
 
-                cmd4.Parameters.AddWithValue("@vno", vno);
+                    cmd4.Parameters.AddWithValue("@vno", vno);
 
-                cmd2.Parameters.AddWithValue("@postdetails", postname);
+                    cmd2.Parameters.AddWithValue("@postdetails", postname);
 
-                cmd2.Parameters.AddWithValue("@vexperieced", vexperieced);
-                cmd2.Parameters.AddWithValue("@vforignvisit", vforignvisit);
-                cmd2.Parameters.AddWithValue("@vunderbond", vunderbond);
-                cmd2.Parameters.AddWithValue("@vcsirrelative", vcsirrelative);
+                    cmd2.Parameters.AddWithValue("@vexperieced", vexperieced);
+                    cmd2.Parameters.AddWithValue("@vforignvisit", vforignvisit);
+                    cmd2.Parameters.AddWithValue("@vunderbond", vunderbond);
+                    cmd2.Parameters.AddWithValue("@vcsirrelative", vcsirrelative);
 
 
-                cmd2.Parameters.AddWithValue("@vsslc", vsslc);
-                cmd2.Parameters.AddWithValue("@vhsc", vhsc);
-                cmd2.Parameters.AddWithValue("@viti", viti);
-                cmd2.Parameters.AddWithValue("@vdip", vdip);
-                cmd2.Parameters.AddWithValue("@vug", vug);
-                cmd2.Parameters.AddWithValue("@vpg", vpg);
-                cmd2.Parameters.AddWithValue("@vphd", vphd);
-                cmd2.Parameters.AddWithValue("@vgate", vgate);
+                    cmd2.Parameters.AddWithValue("@vsslc", vsslc);
+                    cmd2.Parameters.AddWithValue("@vhsc", vhsc);
+                    cmd2.Parameters.AddWithValue("@viti", viti);
+                    cmd2.Parameters.AddWithValue("@vdip", vdip);
+                    cmd2.Parameters.AddWithValue("@vug", vug);
+                    cmd2.Parameters.AddWithValue("@vpg", vpg);
+                    cmd2.Parameters.AddWithValue("@vphd", vphd);
+                    cmd2.Parameters.AddWithValue("@vgate", vgate);
 
-                cmd2.Parameters.AddWithValue("@vExArmy", vExArmy);
-                cmd2.Parameters.AddWithValue("@vPermentGovtStaff",vPermentGovtStaff);
-                cmd2.Parameters.AddWithValue("@vpwd", vpwd);
-                cmd2.Parameters.AddWithValue("@vcompleted", vcompleted);
-                cmd2.Parameters.AddWithValue("@vrpub", vrpub);
-                cmd2.Parameters.AddWithValue("@vpat", vpat);
-                cmd2.Parameters.AddWithValue("@vagerlx", vagerlx);
-                cmd2.Parameters.AddWithValue("@vmarks", vmarks);
+                    cmd2.Parameters.AddWithValue("@vExArmy", vExArmy);
+                    cmd2.Parameters.AddWithValue("@vPermentGovtStaff", vPermentGovtStaff);
+                    cmd2.Parameters.AddWithValue("@vpwd", vpwd);
+                    cmd2.Parameters.AddWithValue("@vcompleted", vcompleted);
+                    cmd2.Parameters.AddWithValue("@vrpub", vrpub);
+                    cmd2.Parameters.AddWithValue("@vpat", vpat);
+                    cmd2.Parameters.AddWithValue("@vagerlx", vagerlx);
+                    cmd2.Parameters.AddWithValue("@vmarks", vmarks);
 
 
 
 
 
-                cmd2.ExecuteNonQuery();
-                cmd3.ExecuteNonQuery();
-                cmd4.ExecuteNonQuery();
-                cmd5.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
+                    cmd3.ExecuteNonQuery();
+                    cmd4.ExecuteNonQuery();
+                    cmd5.ExecuteNonQuery();
 
-                Response.Write("<script> alert ('Your are going to apply');</script>");
-                Session["postname"] = PostDropDownList.SelectedItem.ToString();
-                Session["S_appregno"] = newappno.ToString();
+                    Response.Write("<script> alert ('Your are going to apply');</script>");
+                    Session["postname"] = PostDropDownList.SelectedItem.ToString();
+                    Session["S_appregno"] = newappno.ToString();
 
-                Response.Redirect("Candidate_Home.aspx");
+                    Response.Redirect("Candidate_Home.aspx");
 
-              //  Response.Redirect("BasicinformationADD.aspx");
-                connection.Close();
+                    //  Response.Redirect("BasicinformationADD.aspx");
+                    connection1.Close();
+                    connection1.Dispose();
+                }
             }
 
             catch (Exception ex)
@@ -247,26 +249,29 @@ namespace recruitment
 
                     string postcode1 = PostDropDownList.SelectedValue.ToString();
 
-                    SqlConnection connection = MySqlConnection.Recruitmentcon();
-                    string sql1 = "SELECT * FROM basicdetailsNew WHERE can_regno = @canregdbtest and postcode = @postcode ";
-
-                    SqlCommand command = new SqlCommand(sql1, connection);
-                    command.Parameters.AddWithValue("@canregdbtest", canregdbtest);
-                    command.Parameters.AddWithValue("@postcode", postcode1);
-                    SqlDataReader dr;
-                    dr = command.ExecuteReader();
-
-                    if (dr.HasRows)
+                    using (SqlConnection connection = MySqlConnection.Recruitmentcon())
                     {
+                        string sql1 = "SELECT * FROM basicdetailsNew WHERE can_regno = @canregdbtest and postcode = @postcode ";
 
-                        Response.Write("<script> alert ('You already applied for the post, please submit / continue');</script>");
-                    }
+                        SqlCommand command = new SqlCommand(sql1, connection);
+                        command.Parameters.AddWithValue("@canregdbtest", canregdbtest);
+                        command.Parameters.AddWithValue("@postcode", postcode1);
+                        SqlDataReader dr;
+                        dr = command.ExecuteReader();
 
-                    else
-                    {
-                        ApplicationPostIDCreation();
+                        if (dr.HasRows)
+                        {
+
+                            Response.Write("<script> alert ('You already applied for the post, please submit / continue');</script>");
+                        }
+
+                        else
+                        {
+                            ApplicationPostIDCreation();
+                        }
+                        connection.Close();
+                        connection.Dispose();
                     }
-                    connection.Close();
                 }
 
 
@@ -300,19 +305,7 @@ namespace recruitment
                 qualificationlable.Text = "Ex-servicemen, JCO in Army or other Paramilitary Forces with minimum of five years experience in the work of security.";
             }
 
-            else if (PostDropDownList.SelectedIndex == 2)
-
-            {
-                
-                qualificationlable.Text = "Diploma in Electronics/Electronics & Communication/IT/Computer Science Engineering from a recognized institute.";
-            }
-
-            else if (PostDropDownList.SelectedIndex == 3)
-
-            {
-
-                qualificationlable.Text = "i)12th pass or equivalent graduation from a recognised college/ university <br/> ii) The typing speed must be 35W.P.M in English and 30 W.P.M in Hindi.";
-            }
+          
         }
 
         protected void ContinueApplication_Click(object sender, EventArgs e)
